@@ -1,3 +1,10 @@
+import GameContainer from "./components/GameContainer";
+
 export default function App() {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      {console.log("App is rendering")}
+      <GameContainer />
+    </div>
+  );
 }
