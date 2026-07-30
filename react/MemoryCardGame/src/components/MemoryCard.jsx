@@ -7,10 +7,8 @@ export default function MemoryCard({ item, onClick, isDuplicate }) {
       <div className="memory-card-border" />
       <div className="memory-card-inner">
         <div className="card-accent" />
-        <div className="card-image-wrap">
-          <img src={item.image} alt={item.title} className="card-image" loading="lazy" />
-          <div className="card-image-fade" />
-        </div>
+        <img src={item.image} alt={item.title} className="card-image" loading="lazy" />
+        <div className="card-image-fade" />
         <span className="card-label">{item.title}</span>
       </div>
     </div>
