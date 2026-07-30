@@ -31,8 +31,12 @@
   --font: 'Poppins', sans-serif;
 }
 
-html, body {
+html {
   height: 100%;
+}
+
+body {
+  min-height: 100vh;
   font-family: var(--font);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -96,7 +100,6 @@ body::after {
   --accent-cyan-glow: rgba(0, 188, 212, 0.15);
 }
 
-[data-theme="light"] html,
 [data-theme="light"] body {
   background: linear-gradient(135deg, #f5f0ff 0%, #fff0f5 25%, #f0f5ff 50%, #f5f0f5 75%, #f5f0ff 100%);
 }
