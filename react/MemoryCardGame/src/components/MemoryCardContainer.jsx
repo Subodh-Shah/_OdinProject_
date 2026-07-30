@@ -3,12 +3,12 @@ import MemoryCard from './MemoryCard.jsx';
 export default function MemoryCardContainer({ cards, onCardClick, duplicateValue, shuffling }) {
   return (
     <div className={`card-grid${shuffling ? ' is-shuffling' : ''}`}>
-      {cards.map((item, index) => (
+      {cards.map((item) => (
         <MemoryCard
-          key={`${item}-${index}`}
+          key={item.id}
           item={item}
           onClick={() => onCardClick(item)}
-          isDuplicate={item === duplicateValue}
+          isDuplicate={item.id === duplicateValue}
         />
       ))}
     </div>

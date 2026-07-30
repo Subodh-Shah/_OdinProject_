@@ -1,10 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StartScreen from './StartScreen.jsx';
 import ScoreContainer from './ScoreContainer.jsx';
 import MemoryCardContainer from './MemoryCardContainer.jsx';
 import WinScreen from './WinScreen.jsx';
-
-const emojiSet = ['🐶', '🐱', '🐸', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐰', '🐷', '🐵', '🐔', '🐧', '🐴', '🦄', '🐲'];
 
 function shuffle(array) {
   const arr = [...array];
@@ -41,10 +39,27 @@ export default function GameContainer() {
   const [duplicateValue, setDuplicateValue] = useState(null);
   const [shuffling, setShuffling] = useState(false);
   const [justClicked, setJustClicked] = useState(null);
+  const [allAnime, setAllAnime] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://api.jikan.moe/v4/top/anime?limit=20&filter=bypopularity')
+      .then(res => res.json())
+      .then(data => {
+        const anime = data.data.map(a => ({
+          id: a.mal_id,
+          title: a.title,
+          image: a.images.jpg.large_image_url,
+        }));
+        setAllAnime(anime);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   function startGame(diff) {
     const { cards: count } = config[diff];
-    const picked = shuffle(emojiSet).slice(0, count);
+    const picked = shuffle(allAnime).slice(0, count);
     const deck = shuffle(picked);
     setDifficulty(diff);
     setCards(deck);
@@ -58,8 +73,8 @@ export default function GameContainer() {
     setGamePhase('playing');
   }
 
-  function handleCardClick(value) {
-    setJustClicked(value);
+  function handleCardClick(anime) {
+    setJustClicked(anime.id);
     setTimeout(() => setJustClicked(null), 400);
 
     setShuffling(true);
@@ -67,8 +82,8 @@ export default function GameContainer() {
 
     setCards(prev => shuffle(prev));
 
-    if (clickedValues.has(value)) {
-      setDuplicateValue(value);
+    if (clickedValues.has(anime.id)) {
+      setDuplicateValue(anime.id);
       setTimeout(() => setDuplicateValue(null), 600);
       setShake(true);
       setTimeout(() => setShake(false), 500);
@@ -81,7 +96,7 @@ export default function GameContainer() {
         setBestScore(newScore);
         localStorage.setItem(bestKey(difficulty), newScore.toString());
       }
-      setClickedValues(prev => new Set(prev).add(value));
+      setClickedValues(prev => new Set(prev).add(anime.id));
 
       if (newScore === config[difficulty].cards) {
         setTimeout(() => setGamePhase('won'), 500);
@@ -93,7 +108,7 @@ export default function GameContainer() {
 
   return (
     <div className="game-wrapper">
-      {gamePhase === 'start' && <StartScreen onStart={startGame} />}
+      {gamePhase === 'start' && <StartScreen onStart={startGame} loading={loading} />}
 
       {gamePhase === 'won' && diffConfig && (
         <WinScreen
