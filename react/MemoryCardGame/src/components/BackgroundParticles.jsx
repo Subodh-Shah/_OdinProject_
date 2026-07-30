@@ -1,14 +1,20 @@
 const particles = [
-  { emoji: '🌸', left: '3%', delay: '0s', duration: '14s', size: '1.4rem' },
-  { emoji: '⭐', left: '12%', delay: '4s', duration: '18s', size: '1rem' },
-  { emoji: '🌸', left: '22%', delay: '2s', duration: '12s', size: '1.1rem' },
-  { emoji: '✨', left: '35%', delay: '6s', duration: '16s', size: '0.9rem' },
-  { emoji: '🌸', left: '48%', delay: '1s', duration: '15s', size: '1.3rem' },
-  { emoji: '⭐', left: '58%', delay: '5s', duration: '11s', size: '1rem' },
-  { emoji: '🌸', left: '70%', delay: '3s', duration: '17s', size: '1.2rem' },
-  { emoji: '✨', left: '82%', delay: '7s', duration: '13s', size: '0.8rem' },
-  { emoji: '⭐', left: '92%', delay: '2.5s', duration: '19s', size: '1.1rem' },
-  { emoji: '🌸', left: '45%', delay: '8s', duration: '14s', size: '1rem' },
+  { emoji: '🌸', left: '2%', delay: '0s', dur: '10s', size: '2rem' },
+  { emoji: '✨', left: '8%', delay: '3s', dur: '14s', size: '1.4rem' },
+  { emoji: '💫', left: '16%', delay: '6s', dur: '12s', size: '1.8rem' },
+  { emoji: '🌸', left: '25%', delay: '1s', dur: '11s', size: '2.2rem' },
+  { emoji: '⭐', left: '33%', delay: '5s', dur: '15s', size: '1.6rem' },
+  { emoji: '🌸', left: '40%', delay: '8s', dur: '13s', size: '1.9rem' },
+  { emoji: '💫', left: '48%', delay: '2s', dur: '10s', size: '2rem' },
+  { emoji: '✨', left: '55%', delay: '7s', dur: '16s', size: '1.5rem' },
+  { emoji: '🌸', left: '62%', delay: '4s', dur: '12s', size: '2.1rem' },
+  { emoji: '⭐', left: '70%', delay: '9s', dur: '14s', size: '1.7rem' },
+  { emoji: '🌸', left: '78%', delay: '1.5s', dur: '11s', size: '2.3rem' },
+  { emoji: '✨', left: '85%', delay: '6.5s', dur: '13s', size: '1.5rem' },
+  { emoji: '💫', left: '92%', delay: '3.5s', dur: '15s', size: '1.8rem' },
+  { emoji: '🌸', left: '50%', delay: '10s', dur: '12s', size: '2rem' },
+  { emoji: '⭐', left: '20%', delay: '11s', dur: '14s', size: '1.6rem' },
+  { emoji: '🌸', left: '68%', delay: '12s', dur: '11s', size: '2rem' },
 ];
 
 export default function BackgroundParticles() {
@@ -21,7 +27,7 @@ export default function BackgroundParticles() {
           style={{
             left: p.left,
             animationDelay: p.delay,
-            animationDuration: p.duration,
+            animationDuration: p.dur,
             fontSize: p.size,
           }}
         >

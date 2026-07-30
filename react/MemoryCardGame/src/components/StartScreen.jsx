@@ -30,17 +30,17 @@ export default function StartScreen({ onStart, loading }) {
             <button className="diff-btn diff-easy" onClick={() => onStart('easy')}>
               <span className="diff-icon">🌱</span>
               <span className="diff-label">Easy</span>
-              <span className="diff-cards">5 cards</span>
+              <span className="diff-cards">6 cards</span>
             </button>
             <button className="diff-btn diff-medium" onClick={() => onStart('medium')}>
               <span className="diff-icon">🔥</span>
               <span className="diff-label">Medium</span>
-              <span className="diff-cards">10 cards</span>
+              <span className="diff-cards">12 cards</span>
             </button>
             <button className="diff-btn diff-hard" onClick={() => onStart('hard')}>
               <span className="diff-icon">💀</span>
               <span className="diff-label">Hard</span>
-              <span className="diff-cards">15 cards</span>
+              <span className="diff-cards">18 cards</span>
             </button>
           </div>
 

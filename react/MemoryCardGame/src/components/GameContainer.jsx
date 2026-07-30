@@ -16,9 +16,9 @@ function shuffle(array) {
 }
 
 const config = {
-  easy: { cards: 5 },
-  medium: { cards: 10 },
-  hard: { cards: 15 },
+  easy: { cards: 6 },
+  medium: { cards: 12 },
+  hard: { cards: 18 },
 };
 
 function bestKey(difficulty) {
