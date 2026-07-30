@@ -1,15 +1,16 @@
-import MemoryCard from "./MemoryCard.jsx";
+import MemoryCard from './MemoryCard.jsx';
 
-export default function MemoryCardContainer() {
-  const memoryCards = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-  ];
+export default function MemoryCardContainer({ cards, onCardClick, duplicateValue, shuffling }) {
   return (
-    <div>
-      {console.log("MemoryCardContainer is rendering")}
-      {memoryCards.map((item, index) => {
-        return <MemoryCard key={index} index={index} item={item} />;
-      })}
+    <div className={`card-grid${shuffling ? ' is-shuffling' : ''}`}>
+      {cards.map((item, index) => (
+        <MemoryCard
+          key={`${item}-${index}`}
+          item={item}
+          onClick={() => onCardClick(item)}
+          isDuplicate={item === duplicateValue}
+        />
+      ))}
     </div>
   );
 }

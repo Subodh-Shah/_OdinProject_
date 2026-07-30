@@ -1,13 +1,136 @@
-import ScoreContainer from "./ScoreContainer.jsx";
-import MemoryCardContainer from "./MemoryCardContainer.jsx";
+import { useState } from 'react';
+import StartScreen from './StartScreen.jsx';
+import ScoreContainer from './ScoreContainer.jsx';
+import MemoryCardContainer from './MemoryCardContainer.jsx';
+import WinScreen from './WinScreen.jsx';
+
+const emojiSet = ['🐶', '🐱', '🐸', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐰', '🐷'];
+
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+const config = {
+  easy: { cards: 5 },
+  medium: { cards: 10 },
+  hard: { cards: 15 },
+};
+
+function bestKey(difficulty) {
+  return `memory-best-${difficulty}`;
+}
+
+function loadBest(difficulty) {
+  if (!difficulty) return 0;
+  return parseInt(localStorage.getItem(bestKey(difficulty)) || '0', 10);
+}
 
 export default function GameContainer() {
+  const [gamePhase, setGamePhase] = useState('start');
+  const [difficulty, setDifficulty] = useState(null);
+  const [cards, setCards] = useState([]);
+  const [clickedValues, setClickedValues] = useState(new Set());
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+  const [shake, setShake] = useState(false);
+  const [duplicateValue, setDuplicateValue] = useState(null);
+  const [shuffling, setShuffling] = useState(false);
+  const [justClicked, setJustClicked] = useState(null);
+
+  function startGame(diff) {
+    const { cards: count } = config[diff];
+    const picked = shuffle(emojiSet).slice(0, count);
+    const deck = shuffle(picked);
+    setDifficulty(diff);
+    setCards(deck);
+    setClickedValues(new Set());
+    setScore(0);
+    setBestScore(loadBest(diff));
+    setShake(false);
+    setDuplicateValue(null);
+    setShuffling(false);
+    setJustClicked(null);
+    setGamePhase('playing');
+  }
+
+  function handleCardClick(value) {
+    setJustClicked(value);
+    setTimeout(() => setJustClicked(null), 400);
+
+    setShuffling(true);
+    setTimeout(() => setShuffling(false), 450);
+
+    setCards(prev => shuffle(prev));
+
+    if (clickedValues.has(value)) {
+      setDuplicateValue(value);
+      setTimeout(() => setDuplicateValue(null), 600);
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      setScore(0);
+      setClickedValues(new Set());
+    } else {
+      const newScore = score + 1;
+      setScore(newScore);
+      if (newScore > bestScore) {
+        setBestScore(newScore);
+        localStorage.setItem(bestKey(difficulty), newScore.toString());
+      }
+      setClickedValues(prev => new Set(prev).add(value));
+
+      if (newScore === config[difficulty].cards) {
+        setTimeout(() => setGamePhase('won'), 500);
+      }
+    }
+  }
+
+  const diffConfig = difficulty ? config[difficulty] : null;
+
   return (
-    <div>
-      {console.log("GameContainer is rendering")}
-      <h2 style={{ textAlign: "center" }}>Memory Card Game</h2>
-      <ScoreContainer />
-      <MemoryCardContainer />
+    <div className="game-wrapper">
+      {gamePhase === 'start' && <StartScreen onStart={startGame} />}
+
+      {gamePhase === 'won' && diffConfig && (
+        <WinScreen
+          score={score}
+          bestScore={bestScore}
+          totalCards={diffConfig.cards}
+          difficulty={difficulty}
+          onReplay={() => startGame(difficulty)}
+          onHome={() => setGamePhase('start')}
+        />
+      )}
+
+      {gamePhase === 'playing' && diffConfig && (
+        <>
+          <div className="game-header">
+            <button className="back-btn" onClick={() => setGamePhase('start')} aria-label="Back to menu">
+              ←
+            </button>
+            <ScoreContainer
+              score={score}
+              bestScore={bestScore}
+              difficulty={difficulty}
+              totalCards={diffConfig.cards}
+            />
+          </div>
+
+          <div className={`game-container${shake ? ' shake' : ''}`}>
+            <MemoryCardContainer
+              cards={cards}
+              onCardClick={handleCardClick}
+              duplicateValue={duplicateValue}
+              justClicked={justClicked}
+              shuffling={shuffling}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }
