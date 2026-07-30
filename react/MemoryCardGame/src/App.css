@@ -109,6 +109,17 @@
   min-height: 0;
   overflow-y: auto;
   padding: 20px 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin: auto;
 }
 
 .game-container::-webkit-scrollbar {
@@ -122,13 +133,6 @@
 .game-container::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 2px;
-}
-
-.card-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
 }
 
 .memory-card {
