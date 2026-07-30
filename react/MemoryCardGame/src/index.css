@@ -79,6 +79,32 @@ body::after {
   75% { transform: translate(3%, -2%); }
 }
 
+[data-theme="light"] {
+  --bg-deep: #f0eef5;
+  --bg-primary: #f8f6ff;
+  --bg-secondary: #ffffff;
+  --bg-surface: #eeecf5;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --text-primary: #1a1a2e;
+  --text-secondary: #5c5c7a;
+  --text-muted: #9494b0;
+  --accent: #e91e63;
+  --accent-light: #ff80ab;
+  --accent-glow: rgba(233, 30, 99, 0.15);
+  --accent-glow-strong: rgba(233, 30, 99, 0.25);
+  --accent-cyan: #00bcd4;
+  --accent-cyan-glow: rgba(0, 188, 212, 0.15);
+}
+
+[data-theme="light"] html,
+[data-theme="light"] body {
+  background: linear-gradient(135deg, #f5f0ff 0%, #fff0f5 25%, #f0f5ff 50%, #f5f0f5 75%, #f5f0ff 100%);
+}
+
+[data-theme="light"] body::after {
+  background: radial-gradient(ellipse at 50% 50%, rgba(233, 30, 99, 0.04) 0%, rgba(0, 188, 212, 0.02) 40%, transparent 65%);
+}
+
 #root {
   min-height: 100vh;
   display: flex;

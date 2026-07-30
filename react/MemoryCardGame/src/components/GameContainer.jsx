@@ -3,6 +3,8 @@ import StartScreen from './StartScreen.jsx';
 import ScoreContainer from './ScoreContainer.jsx';
 import MemoryCardContainer from './MemoryCardContainer.jsx';
 import WinScreen from './WinScreen.jsx';
+import BackgroundParticles from './BackgroundParticles.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 function shuffle(array) {
   const arr = [...array];
@@ -41,6 +43,16 @@ export default function GameContainer() {
   const [justClicked, setJustClicked] = useState(null);
   const [allAnime, setAllAnime] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => localStorage.getItem('memory-theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('memory-theme', theme);
+  }, [theme]);
+
+  function toggleTheme() {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  }
 
   useEffect(() => {
     fetch('https://api.jikan.moe/v4/top/anime?limit=20&filter=bypopularity')
@@ -108,6 +120,8 @@ export default function GameContainer() {
 
   return (
     <div className="game-wrapper">
+      <BackgroundParticles />
+      <ThemeToggle theme={theme} onToggle={toggleTheme} />
       {gamePhase === 'start' && <StartScreen onStart={startGame} loading={loading} />}
 
       {gamePhase === 'won' && diffConfig && (
