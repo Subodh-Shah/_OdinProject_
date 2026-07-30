@@ -4,7 +4,7 @@ import ScoreContainer from './ScoreContainer.jsx';
 import MemoryCardContainer from './MemoryCardContainer.jsx';
 import WinScreen from './WinScreen.jsx';
 
-const emojiSet = ['🐶', '🐱', '🐸', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐰', '🐷'];
+const emojiSet = ['🐶', '🐱', '🐸', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐰', '🐷', '🐵', '🐔', '🐧', '🐴', '🦄', '🐲'];
 
 function shuffle(array) {
   const arr = [...array];
