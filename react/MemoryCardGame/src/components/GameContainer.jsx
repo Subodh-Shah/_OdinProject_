@@ -21,15 +21,6 @@ const config = {
   hard: { cards: 18 },
 };
 
-function bestKey(difficulty) {
-  return `memory-best-${difficulty}`;
-}
-
-function loadBest(difficulty) {
-  if (!difficulty) return 0;
-  return parseInt(localStorage.getItem(bestKey(difficulty)) || '0', 10);
-}
-
 export default function GameContainer() {
   const [gamePhase, setGamePhase] = useState('start');
   const [difficulty, setDifficulty] = useState(null);
@@ -77,7 +68,7 @@ export default function GameContainer() {
     setCards(deck);
     setClickedValues(new Set());
     setScore(0);
-    setBestScore(loadBest(diff));
+    setBestScore(0);
     setShake(false);
     setDuplicateValue(null);
     setShuffling(false);
@@ -106,7 +97,6 @@ export default function GameContainer() {
       setScore(newScore);
       if (newScore > bestScore) {
         setBestScore(newScore);
-        localStorage.setItem(bestKey(difficulty), newScore.toString());
       }
       setClickedValues(prev => new Set(prev).add(anime.id));
 
